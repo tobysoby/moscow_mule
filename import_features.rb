@@ -1,9 +1,11 @@
 def import
 	data = Hash.new
 	features = Array.new
+	#an array for all tags
+	tags_global = Array.new
 	#load all Files
 	all_feature_files = Dir["../features/*.feature"]
-	#create all Features
+	#get all Features
 	all_feature_files.each_with_index do |feature_file, index_feature_files|
 		feature = Hash.new
 		scenarios = Array.new
@@ -11,7 +13,7 @@ def import
 		content = File.readlines feature_file
 		content.each_with_index do |line, index_feature_lines|
 			#if the line starts with Funktionalität
-		begin
+		#begin
 			if line.include? "Funktionalität"
 				#this line is the title of the Funktionalität
 				feature["feature_title"] = line.sub!("Funktionalität: ", "")
@@ -19,14 +21,15 @@ def import
 				#loop through 1..100, this should usually be enough for the descrition of a feature
 				feature_description = ""
 				for i in 1..100
+					next_line = content[index_feature_lines+i]
 					#if the next line does not start with Szenario or is a Tag
-					if (!content[index_feature_lines+i].include? "Szenario") || (!content[index_feature_lines+i].include? "@")
-						feature_description = feature_description + content[index_feature_lines+i]
+					if (!next_line.include? "Szenario") && (!next_line.include? "@")
+						feature_description = feature_description + next_line
 					else
-						feature["feature_description"] = feature_description
 						break
 					end
 				end
+				feature["feature_description"] = feature_description
 			end
 			if line.include? "Szenario"
 				#there is a Szenario
@@ -40,32 +43,33 @@ def import
 				scenario_description = ""
 				#get the description and the steps
 				for i in 1..100
+					next_line = content[index_feature_lines+i]
 					begin
 						#if its not one of the steps
-						if (!content[index_feature_lines+i].include? "Angenommen") && (!content[index_feature_lines+i].include? "Wenn") && (!content[index_feature_lines+i].include? "Dann")
-							if content[index_feature_lines+i].include? "Szenario"
-								break
-							else
-								scenario_description = scenario_description + content[index_feature_lines+i]
-							end
-						elsif content[index_feature_lines+i].include? "Angenommen"
-							scenario_steps.push content[index_feature_lines+i]
-						elsif content[index_feature_lines+i].include? "Wenn"
-							scenario_steps.push content[index_feature_lines+i]
-						elsif content[index_feature_lines+i].include? "Dann"
-							scenario_steps.push content[index_feature_lines+i]
+						if next_line[0] == "#"
+							scenario_description = scenario_description + "<br>" + next_line
+						elsif (next_line.include? "Angenommen") || (next_line.include? "Wenn") || (next_line.include? "Dann") 
+							scenario_steps.push next_line
+						else
 							break
 						end
 					rescue
-						puts "yepp"
+						puts "yepp1"
 						break
 					end
 				end
 				#get the tags
 				for i in 1..100
-					if content[index_feature_lines-i].include? "@"
-						scenario_tags.push content[index_feature_lines-i]
-					elsif content[index_feature_lines-i].include? "#"
+					last_line = content[index_feature_lines-i]
+					if last_line[0] == "@"
+						#puts last_line
+						scenario_tags.push last_line
+						#puts scenario_tags
+						#check if the tag has been recognized before
+						unless tags_global.include?(last_line)
+							tags_global << last_line
+						end
+					elsif last_line[0] == "#"
 						next
 					else
 						break
@@ -74,13 +78,15 @@ def import
 				scenario["title"] = scenario_title
 				scenario["description"] = scenario_description
 				scenario["steps"] = scenario_steps
+				puts scenario_tags
 				scenario["tags"] = scenario_tags
 				#push it all into the scenarios-Array
 				scenarios.push scenario
 			end
-		rescue
-			next
-		end
+		#rescue
+		#	puts "yepp2"
+		#	next
+		#end
 
 			feature["index"] = index_feature_files
 			feature["feature_scenarios"] = scenarios
@@ -89,22 +95,29 @@ def import
 		features.push feature
 	end
 	#get the testers
-	if File.exists?("../features/@testers")
-		testers = Array.new
-		content = File.readlines ("../features/@testers")
-		content.each do |tester|
-			testers.push tester
-		end
-		data["testers"] = testers
-	end
+	data = get_from_file_linebyline("@testers", data, "testers")
+	#get the platforms
+	data = get_from_file_linebyline("@platforms", data, "platforms")
+	#write the features into data
 	data["features"] = features
-	puts data["testers"][0]
+	#write tags_global into data
+	data["tags_global"] = tags_global
 	return data
 end
 
-def prettify(string)
-	string.gsub!('"', '')
-	string.gsub!('\n', '<br>')
-
-	return string
+def get_from_file_linebyline(file, hash, hash_key)
+	#does the file exist?
+	if File.exists?("../features/" + file)
+		things = Array.new
+		#read the file line by line
+		content = File.readlines ("../features/" + file)
+		content.each do |thing|
+			#push all things into an array
+			things.push thing
+		end
+		#write the array into the hash
+		hash[hash_key] = things
+		#return the hash
+		return hash
+	end
 end

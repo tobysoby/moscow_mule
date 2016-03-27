@@ -11,9 +11,9 @@ get '/' do
 end
 
 get '/features/:id' do
+	#get data
 	@data = data
-	#puts "Params: " + params['id']
-	#puts @data[params['id'].to_i]
+	#look-up the right feature from its id
 	feature = @data["features"][params['id'].to_i]
 	content_type :json
 	feature.to_json

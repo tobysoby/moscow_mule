@@ -50,6 +50,18 @@
 									<li class="list-group-item"><%= tester %></li>
 								<% end %>
 							</ul>
+							<ul class="list-group">
+								<h5 class="list-group-item-heading">Platforms</h5>
+								<% @data["platforms"].each do |platform| %>
+									<li class="list-group-item"><%= platform %></li>
+								<% end %>
+							</ul>
+							<ul class="list-group">
+								<h5 class="list-group-item-heading">Tags</h5>
+								<% @data["tags_global"].each do |tag| %>
+									<li class="list-group-item"><%= tag %></li>
+								<% end %>
+							</ul>
 						</div>
 					</div>
 				</div>
