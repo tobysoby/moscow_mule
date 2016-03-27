@@ -18,3 +18,24 @@ get '/features/:id' do
 	content_type :json
 	feature.to_json
 end
+
+get '/tags/' do
+	@data = data
+	tags = @data["tags_global"]
+	content_type :json
+	tags.to_json
+end
+
+get '/tags/testplans' do
+	@data = data
+	tags = @data["tags_testplans_global"]
+	content_type :json
+	tags.to_json
+end
+
+get '/tags/platforms' do
+	@data = data
+	tags = @data["tags_platforms_global"]
+	content_type :json
+	tags.to_json
+end

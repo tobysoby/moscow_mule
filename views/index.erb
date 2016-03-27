@@ -58,8 +58,8 @@
 							</ul>
 							<ul class="list-group">
 								<h5 class="list-group-item-heading">Tags</h5>
-								<% @data["tags_global"].each do |tag| %>
-									<li class="list-group-item"><%= tag %></li>
+								<% @data["tags_global"].each do |key, value| %>
+									<li class="list-group-item"><%= key %></li>
 								<% end %>
 							</ul>
 						</div>

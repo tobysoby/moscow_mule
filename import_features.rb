@@ -1,8 +1,10 @@
 def import
 	data = Hash.new
 	features = Array.new
-	#an array for all tags
-	tags_global = Array.new
+	#arrays for all tags
+	tags_global = Hash.new
+	tags_testplans_global = Hash.new
+	tags_platforms_global = Hash.new
 	#load all Files
 	all_feature_files = Dir["../features/*.feature"]
 	#get all Features
@@ -13,7 +15,6 @@ def import
 		content = File.readlines feature_file
 		content.each_with_index do |line, index_feature_lines|
 			#if the line starts with Funktionalität
-		#begin
 			if line.include? "Funktionalität"
 				#this line is the title of the Funktionalität
 				feature["feature_title"] = line.sub!("Funktionalität: ", "")
@@ -34,6 +35,8 @@ def import
 			if line.include? "Szenario"
 				#there is a Szenario
 				scenario = Hash.new
+				#get the scenario-id
+				scenario["id"] = scenarios.size.to_i + 1
 				scenario_steps = Array.new
 				scenario_tags = Array.new
 				#this line is the title of the Szenario
@@ -62,12 +65,57 @@ def import
 				for i in 1..100
 					last_line = content[index_feature_lines-i]
 					if last_line[0] == "@"
-						#puts last_line
+						#save the tag
 						scenario_tags.push last_line
-						#puts scenario_tags
-						#check if the tag has been recognized before
-						unless tags_global.include?(last_line)
-							tags_global << last_line
+						#check if the tag is from a testplan and has been recognized before
+						if last_line[1..2] == "t_"
+							#check if the tag has already been added to the tag-array
+							if tags_testplans_global[last_line] != nil
+								#if it has been added, get the array of scenario_ids
+								scenario_ids = Array.new
+								scenario_ids = tags_testplans_global[last_line]
+								#add the current feature_id and scenario_id
+								scenario_ids.push index_feature_files.to_s + "-" + scenario["id"].to_s
+								#write it into the hash
+								tags_testplans_global[last_line] = scenario_ids
+							else
+								#if it has not been added, make it new
+								scenario_ids = Array.new
+								scenario_ids.push index_feature_files.to_s + "-" + scenario["id"].to_s
+								tags_testplans_global[last_line] = scenario_ids
+							end
+						elsif last_line[1..2] == "p_"
+							#check if the tag has already been added to the tag-array
+							if tags_platforms_global[last_line] != nil
+								#if it has been added, get the array of scenario_ids
+								scenario_ids = Array.new
+								scenario_ids = tags_platforms_global[last_line]
+								#add the current feature_id and scenario_id
+								scenario_ids.push index_feature_files.to_s + "-" + scenario["id"].to_s
+								#write it into the hash
+								tags_platforms_global[last_line] = scenario_ids
+							else
+								#if it has not been added, make it new
+								scenario_ids = Array.new
+								scenario_ids.push index_feature_files.to_s + "-" + scenario["id"].to_s
+								tags_platforms_global[last_line] = scenario_ids
+							end
+						else
+							#check if the tag has already been added to the tag-array
+							if tags_global[last_line] != nil
+								#if it has been added, get the array of scenario_ids
+								scenario_ids = Array.new
+								scenario_ids = tags_global[last_line]
+								#add the current feature_id and scenario_id
+								scenario_ids.push index_feature_files.to_s + "-" + scenario["id"].to_s
+								#write it into the hash
+								tags_global[last_line] = scenario_ids
+							else
+								#if it has not been added, make it new
+								scenario_ids = Array.new
+								scenario_ids.push index_feature_files.to_s + "-" + scenario["id"].to_s
+								tags_global[last_line] = scenario_ids
+							end
 						end
 					elsif last_line[0] == "#"
 						next
@@ -83,10 +131,6 @@ def import
 				#push it all into the scenarios-Array
 				scenarios.push scenario
 			end
-		#rescue
-		#	puts "yepp2"
-		#	next
-		#end
 
 			feature["index"] = index_feature_files
 			feature["feature_scenarios"] = scenarios
@@ -102,6 +146,8 @@ def import
 	data["features"] = features
 	#write tags_global into data
 	data["tags_global"] = tags_global
+	data["tags_testplans_global"] = tags_testplans_global
+	data["tags_platforms_global"] = tags_platforms_global
 	return data
 end
 
