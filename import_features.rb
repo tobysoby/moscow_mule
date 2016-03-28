@@ -94,9 +94,9 @@ def import
 		features.push feature
 	end
 	#get the testers
-	data = get_from_file_linebyline("@testers", data, "testers")
+	#data = get_from_file_linebyline("@testers", data, "testers")
 	#get the platforms
-	data = get_from_file_linebyline("@platforms", data, "platforms")
+	#data = get_from_file_linebyline("@platforms", data, "platforms")
 	#write the features into data
 	data["features"] = features
 	#write tags_global into data

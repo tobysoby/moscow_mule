@@ -46,20 +46,20 @@
 						<div class="col-md-3">
 							<ul class="list-group">
 								<h5 class="list-group-item-heading">Testers</h5>
-								<% @data["testers"].each do |tester| %>
-									<li class="list-group-item"><%= tester %></li>
+								<% @data["tags_testers_global"].each do |key, value| %>
+									<li class="list-group-item"><a href="#" onclick="setContent_taglist('testers',<%= value["id"] %>);return false;"><%= key %></a><span class="badge"><%= value["scenario_ids"].size %></span></li>
 								<% end %>
 							</ul>
 							<ul class="list-group">
 								<h5 class="list-group-item-heading">Platforms</h5>
-								<% @data["platforms"].each do |platform| %>
-									<li class="list-group-item"><%= platform %></li>
+								<% @data["tags_platforms_global"].each do |key, value| %>
+									<li class="list-group-item"><a href="#" onclick="setContent_taglist('platforms',<%= value["id"] %>);return false;"><%= key %></a><span class="badge"><%= value["scenario_ids"].size %></span></li>
 								<% end %>
 							</ul>
 							<ul class="list-group">
 								<h5 class="list-group-item-heading">Testplans</h5>
 								<% @data["tags_testplans_global"].each do |key, value| %>
-									<li class="list-group-item"><%= key %></li>
+									<li class="list-group-item"><a href="#" onclick="setContent_taglist('testplans',<%= value["id"] %>);return false;"><%= key %></a><span class="badge"><%= value["scenario_ids"].size %></span></li>
 								<% end %>
 							</ul>
 							<ul class="list-group">
