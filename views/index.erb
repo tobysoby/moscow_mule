@@ -57,9 +57,15 @@
 								<% end %>
 							</ul>
 							<ul class="list-group">
+								<h5 class="list-group-item-heading">Testplans</h5>
+								<% @data["tags_testplans_global"].each do |key, value| %>
+									<li class="list-group-item"><%= key %></li>
+								<% end %>
+							</ul>
+							<ul class="list-group">
 								<h5 class="list-group-item-heading">Tags</h5>
 								<% @data["tags_global"].each do |key, value| %>
-									<li class="list-group-item"><%= key %></li>
+									<li class="list-group-item"><%= key %><span class="badge"><%= value["scenario_ids"].size %></span></li>
 								<% end %>
 							</ul>
 						</div>

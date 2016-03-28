@@ -33,9 +33,22 @@ get '/tags/testplans' do
 	tags.to_json
 end
 
+get '/tag/testplans/:name' do
+	tags_links = data["tags_testplans_global"][params['name']]
+	content_type :json
+	tags_links.to_json
+end
+
 get '/tags/platforms' do
 	@data = data
 	tags = @data["tags_platforms_global"]
+	content_type :json
+	tags.to_json
+end
+
+get '/tags/testers' do
+	@data = data
+	tags = @data["tags_testers_global"]
 	content_type :json
 	tags.to_json
 end

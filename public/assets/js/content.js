@@ -12,7 +12,12 @@ function setContent(index) {
 			html_string = html_string + "</div>";
 			//set the scenarios
 			$.each(data.feature_scenarios, function(index,value) {
-				html_string = html_string + "<div id='scenario_" + index + "' class='panel panel-default'><!-- Default panel contents --><div class='panel-heading'>" + value.title + "</div><div class='panel-body'><p>" + value.description + "</p></div><!-- List group --><ul class='list-group'>"
+				html_string = html_string + "<div id='scenario_" + index + "' class='panel panel-default'><!-- Default panel contents --><div class='panel-heading'>" + value.title
+				//add the tags as labels
+				$.each(value.tags, function(index2, value_tag) {
+					html_string += "<span class='label label-default'>" + value_tag + "</span>"
+				})
+				html_string += "</div><div class='panel-body'><p>" + value.description + "</p></div><!-- List group --><ul class='list-group'>"
 				$.each(value.steps, function(index2,value_step) {
 					html_string = html_string + "<li class='list-group-item'>" + value_step + "</li>"
 				});
@@ -21,4 +26,8 @@ function setContent(index) {
 			$(".content").html(html_string);
 		}
 	});
+}
+
+function setContent_taglist(tagname) {
+	
 }
