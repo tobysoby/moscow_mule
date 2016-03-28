@@ -65,7 +65,7 @@
 							<ul class="list-group">
 								<h5 class="list-group-item-heading">Tags</h5>
 								<% @data["tags_global"].each do |key, value| %>
-									<li class="list-group-item"><%= key %><span class="badge"><%= value["scenario_ids"].size %></span></li>
+									<li class="list-group-item"><a href="#" onclick="setContent_taglist('tags',<%= value["id"] %>);return false;"><%= key %></a><span class="badge"><%= value["scenario_ids"].size %></span></li>
 								<% end %>
 							</ul>
 						</div>

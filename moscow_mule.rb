@@ -19,11 +19,24 @@ get '/features/:id' do
 	feature.to_json
 end
 
-get '/tags/' do
+get '/tags/tags' do
 	@data = data
 	tags = @data["tags_global"]
 	content_type :json
 	tags.to_json
+end
+
+get '/tags/tags/:id' do
+	resp = Hash.new
+	tags = data["tags_global"]
+	tags.each do |key, value|
+		if value["id"] == params["id"].to_i
+			resp["tag"] = key
+			resp["scenario_ids"] = value["scenario_ids"]
+		end
+	end
+	content_type :json
+	resp.to_json
 end
 
 get '/tags/testplans' do
@@ -33,10 +46,17 @@ get '/tags/testplans' do
 	tags.to_json
 end
 
-get '/tag/testplans/:name' do
-	tags_links = data["tags_testplans_global"][params['name']]
+get '/tags/testplans/:id' do
+	resp = Hash.new
+	tags = data["tags_testplans_global"]
+	tags.each do |key, value|
+		if value["id"] == params["id"].to_i
+			resp["tag"] = key
+			resp["scenario_ids"] = value["scenario_ids"]
+		end
+	end
 	content_type :json
-	tags_links.to_json
+	resp.to_json
 end
 
 get '/tags/platforms' do
@@ -46,9 +66,35 @@ get '/tags/platforms' do
 	tags.to_json
 end
 
+get '/tags/platforms/:id' do
+	resp = Hash.new
+	tags = data["tags_platforms_global"]
+	tags.each do |key, value|
+		if value["id"] == params["id"].to_i
+			resp["tag"] = key
+			resp["scenario_ids"] = value["scenario_ids"]
+		end
+	end
+	content_type :json
+	resp.to_json
+end
+
 get '/tags/testers' do
 	@data = data
 	tags = @data["tags_testers_global"]
 	content_type :json
 	tags.to_json
+end
+
+get '/tags/testers/:id' do
+	resp = Hash.new
+	tags = data["tags_testers_global"]
+	tags.each do |key, value|
+		if value["id"] == params["id"].to_i
+			resp["tag"] = key
+			resp["scenario_ids"] = value["scenario_ids"]
+		end
+	end
+	content_type :json
+	resp.to_json
 end
