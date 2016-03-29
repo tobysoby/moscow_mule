@@ -16,9 +16,12 @@ def import
 		content = File.readlines feature_file
 		content.each_with_index do |line, index_feature_lines|
 			#if the line starts with Funktionalität
-			if line.include? "Funktionalität"
+			if line[0..13] == "Funktionalität"
 				#this line is the title of the Funktionalität
-				feature["feature_title"] = line.sub!("Funktionalität: ", "")
+				puts line
+				puts line.sub!("Funktionalität: ", "")
+				feature["feature_title"] = line.sub("Funktionalität: ", "")
+				puts feature["feature_title"]
 				#check the following lines
 				#loop through 1..100, this should usually be enough for the descrition of a feature
 				feature_description = ""
