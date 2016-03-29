@@ -38,10 +38,13 @@ function setContent_taglist(target, index) {
 			html_string += "<div class='list-group'>";
 			$.each(data.scenario_ids, function(index,value) {
 				var index_minus = value.indexOf("-");
-				html_string += "<a href='#' onclick='setContent(" + value.substring(0, index_minus) + ");return false;' class='list-group-item'>" + value + "</a>";
+				console.log(value.substring(index_minus+1, value.length-1));
+				html_string += "<a href='#scenario_" + value.substring(index_minus+1, value.length) + "' onclick='setContent(" + value.substring(0, index_minus) + ");return false;' class='list-group-item'>" + value + "</a>";
+				//index_value = value;
 			});
 			html_string += "</div>";
 			$(".content").html(html_string);
+    		//location.href = "#scenario_"+index_value.substring(index_minus+1, index_value.length); 
 		}
 	});
 }

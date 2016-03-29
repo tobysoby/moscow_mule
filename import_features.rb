@@ -48,11 +48,16 @@ def import
 				#get the description and the steps
 				for i in 1..100
 					next_line = content[index_feature_lines+i]
-					#if its not one of the steps
-					if next_line[0] == "#"
-						scenario_description = scenario_description + "<br>" + next_line
-					elsif (next_line.include? "Angenommen") || (next_line.include? "Wenn") || (next_line.include? "Dann") 
-						scenario_steps.push next_line
+					#if this line exists
+					if next_line != nil
+						#if its not one of the steps
+						if next_line[0] == "#"
+							scenario_description = scenario_description + "<br>" + next_line
+						elsif (next_line.include? "Angenommen") || (next_line.include? "Wenn") || (next_line.include? "Dann") 
+							scenario_steps.push next_line
+						else
+							break
+						end
 					else
 						break
 					end
