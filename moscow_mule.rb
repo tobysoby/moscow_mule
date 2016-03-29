@@ -98,3 +98,8 @@ get '/tags/testers/:id' do
 	content_type :json
 	resp.to_json
 end
+
+get '/reload/' do
+	data = import
+	redirect to('/')
+end
