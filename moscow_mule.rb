@@ -2,6 +2,9 @@ require 'rubygems'
 require 'sinatra'
 require 'json'
 require './import_features.rb'
+require './import_config.rb'
+
+import_config
 
 data = import
 
@@ -33,6 +36,7 @@ get '/tags/tags/:id' do
 		if value["id"] == params["id"].to_i
 			resp["tag"] = key
 			resp["scenario_ids"] = value["scenario_ids"]
+			resp["scenario_titles"] = value["scenario_titles"]
 		end
 	end
 	content_type :json
@@ -53,6 +57,7 @@ get '/tags/testplans/:id' do
 		if value["id"] == params["id"].to_i
 			resp["tag"] = key
 			resp["scenario_ids"] = value["scenario_ids"]
+			resp["scenario_titles"] = value["scenario_titles"]
 		end
 	end
 	content_type :json
@@ -73,6 +78,7 @@ get '/tags/platforms/:id' do
 		if value["id"] == params["id"].to_i
 			resp["tag"] = key
 			resp["scenario_ids"] = value["scenario_ids"]
+			resp["scenario_titles"] = value["scenario_titles"]
 		end
 	end
 	content_type :json
@@ -93,6 +99,7 @@ get '/tags/testers/:id' do
 		if value["id"] == params["id"].to_i
 			resp["tag"] = key
 			resp["scenario_ids"] = value["scenario_ids"]
+			resp["scenario_titles"] = value["scenario_titles"]
 		end
 	end
 	content_type :json

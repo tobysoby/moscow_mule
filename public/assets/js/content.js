@@ -39,7 +39,7 @@ function setContent_taglist(target, index) {
 			$.each(data.scenario_ids, function(index,value) {
 				var index_minus = value.indexOf("-");
 				console.log(value.substring(index_minus+1, value.length-1));
-				html_string += "<a href='#scenario_" + value.substring(index_minus+1, value.length) + "' onclick='setContent(" + value.substring(0, index_minus) + ");return false;' class='list-group-item'>" + value + "</a>";
+				html_string += "<a href='#scenario_" + value.substring(index_minus+1, value.length) + "' onclick='setContent(" + value.substring(0, index_minus) + ");return false;' class='list-group-item'>" + data.scenario_titles[index] + "</a>";
 				//index_value = value;
 			});
 			html_string += "</div>";

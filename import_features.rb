@@ -7,7 +7,7 @@ def import
 	tags_platforms_global = Hash.new
 	tags_testers_global = Hash.new
 	#load all Files
-	all_feature_files = Dir["../features/*.feature"]
+	all_feature_files = Dir[@location_features]
 	#get all Features
 	all_feature_files.each_with_index do |feature_file, index_feature_files|
 		feature = Hash.new
@@ -70,13 +70,13 @@ def import
 						scenario_tags.push last_line
 						#check if the tag is from a testplan and has been recognized before
 						if last_line[1..3] == "tp_"
-							tags_testplans_gobal= put_into_global_tag_hash(tags_testplans_global, last_line, index_feature_files, scenario["id"].to_s)
+							tags_testplans_gobal= put_into_global_tag_hash(tags_testplans_global, last_line, index_feature_files, scenario["id"].to_s, scenario_title)
 						elsif last_line[1..2] == "p_"
-							tags_platforms_global = put_into_global_tag_hash(tags_platforms_global, last_line, index_feature_files, scenario["id"].to_s)
+							tags_platforms_global = put_into_global_tag_hash(tags_platforms_global, last_line, index_feature_files, scenario["id"].to_s, scenario_title)
 						elsif last_line[1..2] == "t_"
-							tags_testers_global = put_into_global_tag_hash(tags_testers_global, last_line, index_feature_files, scenario["id"].to_s)
+							tags_testers_global = put_into_global_tag_hash(tags_testers_global, last_line, index_feature_files, scenario["id"].to_s, scenario_title)
 						else
-							tags_global = put_into_global_tag_hash(tags_global, last_line, index_feature_files, scenario["id"].to_s)
+							tags_global = put_into_global_tag_hash(tags_global, last_line, index_feature_files, scenario["id"].to_s, scenario_title)
 						end
 					elsif last_line[0] == "#"
 						next
@@ -112,7 +112,7 @@ def import
 	return data
 end
 
-#this read a file line by line and puts all the lines into an array and puts it into a hash
+#this reads a file line by line and puts all the lines into an array and puts it into a hash
 def get_from_file_linebyline(file, hash, hash_key)
 	#does the file exist?
 	if File.exists?("../features/" + file)
@@ -130,27 +130,42 @@ def get_from_file_linebyline(file, hash, hash_key)
 	end
 end
 
-def put_into_global_tag_hash(tag_hash, last_line, index_feature_files, index_scenario)
+def put_into_global_tag_hash(tag_hash, last_line, index_feature_files, index_scenario, scenario_title)
 	#check if the tag has already been added to the tag-hash
 	if tag_hash[last_line] != nil
 		tag = Hash.new
+		tag = tag_hash[last_line]
+
 		#if it has been added, get the array of scenario_ids
 		scenario_ids = Array.new
-		tag = tag_hash[last_line]
 		scenario_ids = tag["scenario_ids"]
 		#add the current feature_id and scenario_id
 		scenario_ids.push index_feature_files.to_s + "-" + index_scenario
-		#write it into the hash
+		#update scenario_ids
 		tag["scenario_ids"] = scenario_ids
+
+
+		scenario_titles = Array.new
+		scenario_titles = tag["scenario_titles"]
+		#write it into the hash
+		scenario_titles.push scenario_title
+		tag["scenario_titles"] = scenario_titles
+
 		tag_hash[last_line] = tag
 	else
 		#if it has not been added, make it new
 		tag = Hash.new
+		#give our tag an id
+		tag["id"] = tag_hash.length + 1
+
 		scenario_ids = Array.new
 		scenario_ids.push index_feature_files.to_s + "-" + index_scenario
 		tag["scenario_ids"] = scenario_ids
-		#give our tag an id
-		tag["id"] = tag_hash.length + 1
+
+		scenario_titles = Array.new
+		scenario_titles.push scenario_title
+		tag["scenario_titles"] = scenario_titles
+
 		tag_hash[last_line] = tag
 	end
 	return tag_hash
