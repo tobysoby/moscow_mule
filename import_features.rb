@@ -1,3 +1,165 @@
+#what should the model look like?
+# an array of scenario-hashes: scenario = {"id" => id, feature_id => "feature_id", "name" => name, "description" => description, "steps" => [steps], "tags", [tags]}
+# an array of feature-hashes: feature = {"id" => id, "name" => name, "description" => description, "scenarios" => [scenario_ids], "feature_file" => feature_file}
+# an array of tag-hashes: 
+
+class Scenario
+	attr_accessor :id, :feature_id, :name, :description, :steps, :tags
+
+	def initialize(options)
+		@id = options[:id]
+		@feature_id = options[:feature_id]
+		@name = options[:name]
+		@description = options[:description]
+		@steps = options[:steps]
+		@tags = options[:tags]
+	end
+
+	def self.all
+    	ObjectSpace.each_object(self).to_a
+  	end
+
+  	def self.count
+    	all.count
+  	end
+end
+
+def import_2
+	#define the return hash
+	data = Hash.new
+
+	#define arrays
+	features = Array.new
+	scenarios = Array.new
+
+	#make a run for all features
+	feature_files = Dir[@location_features]
+	feature_files.each_with_index do |feature_file, index_feature_file|
+		feature = Hash.new
+		#load and process feature_file
+		feature = load_and_process_feature_file(feature_file)
+		feature["id"] = index_feature_file
+		features.push feature
+	end
+
+	#set the scenario_id
+	scenario_id = 0
+	#make a run for all scenarios
+	features.each do |feature|
+		scenarios_per_feature = Array.new
+		feature_id = feature["id"]
+		feature_file = feature["feature_file"]
+		#load and process the feature_file, get back an array of scenarios and the new scenario_id
+		scenarios_per_feature, scenario_id = feature_file_get_scenarios(feature_file, scenario_id)
+		#incorporate the array of scenarios into the overall array of scenarios
+		scenarios.push(*scenarios_per_feature)
+		#get all scenario_ids and put em into the feature_hash
+		feature["scenarios"] = get_scenario_ids(scenarios_per_feature)
+	end
+
+	#get all Tags
+	scenarios.each do |scenario|
+
+
+	puts scenarios
+
+	data["features"] = features
+	data["scenarios"] = scenarios
+	return data
+end
+
+def load_and_process_feature_file(feature_file)
+	feature = Hash.new
+	content = File.readlines feature_file
+	content.each_with_index do |line, index_feature_line|
+		#if the line starts with Funktionalität
+		feature["feature_file"] = File.expand_path(feature_file)
+		if line[0..13] == "Funktionalität"
+			#this line is the title of the Funktionalität
+			feature["name"] = line.sub("Funktionalität: ", "")
+			#check the following lines
+			#loop through 1..100, this should usually be enough for the description of a feature
+			feature_description = ""
+			for i in 1..100
+				next_line = content[index_feature_line+i]
+				#if the next line does not start with Szenario or is a Tag
+				if (!next_line.include? "Szenario") && (!next_line.include? "@")
+					feature_description = feature_description + next_line
+				else
+					break
+				end
+			end
+			feature["description"] = feature_description
+		end
+	end
+	return feature
+end
+
+def feature_file_get_scenarios(feature_file, scenario_id)
+	scenarios = Array.new
+	content = File.readlines feature_file
+	content.each_with_index do |line, index_feature_line|
+		if line.include? "Szenario"
+			#there is a Szenario
+			scenario = Hash.new
+			#set the scenario-id
+			scenario["id"] = scenario_id
+			scenario_steps = Array.new
+			scenario_tags = Array.new
+			#this line is the title of the Szenario
+			scenario["title"] = line.sub!("Szenario: ", "")
+			#check the following line
+			#loop through 1..100, this should usually be enough for the description of a scenario and the steps
+			scenario_description = ""
+			#get the description and the steps
+			for i in 1..100
+				next_line = content[index_feature_line+i]
+				#if this line exists
+				if next_line != nil
+					#if its not one of the steps
+					if next_line[0] == "#"
+						scenario_description = scenario_description + "<br>" + next_line
+					elsif (next_line.include? "Angenommen") || (next_line.include? "Wenn") || (next_line.include? "Dann") 
+						scenario_steps.push next_line
+					else
+						break
+					end
+				else
+					break
+				end
+			end
+			#get the tags
+			for i in 1..100
+				last_line = content[index_feature_line-i]
+				if last_line[0] == "@"
+					#save the tag
+					scenario_tags.push last_line
+				elsif last_line[0] == "#"
+					next
+				else
+					break
+				end
+			end
+			scenario["description"] = scenario_description
+			scenario["steps"] = scenario_steps
+			scenario["tags"] = scenario_tags
+			#push it all into the scenarios-Array
+			scenarios.push scenario
+			#increment scenario_id
+			scenario_id += 1
+		end
+	end
+	return scenarios, scenario_id
+end
+
+def get_scenario_ids(scenarios_per_feature)
+	scenario_ids = Array.new
+	scenarios_per_feature.each do |scenario|
+		scenario_ids.push scenario["id"]
+	end
+	return scenario_ids
+end
+
 def import
 	data = Hash.new
 	features = Array.new
@@ -20,7 +182,7 @@ def import
 				#this line is the title of the Funktionalität
 				feature["feature_title"] = line.sub("Funktionalität: ", "")
 				#check the following lines
-				#loop through 1..100, this should usually be enough for the descrition of a feature
+				#loop through 1..100, this should usually be enough for the description of a feature
 				feature_description = ""
 				for i in 1..100
 					next_line = content[index_feature_lines+i]
@@ -43,7 +205,7 @@ def import
 				#this line is the title of the Szenario
 				scenario_title = line.sub!("Szenario: ", "")
 				#check the following line
-				#loop through 1..100, this should usually be enough for the descrition of a scenario and the steps
+				#loop through 1..100, this should usually be enough for the description of a scenario and the steps
 				scenario_description = ""
 				#get the description and the steps
 				for i in 1..100
