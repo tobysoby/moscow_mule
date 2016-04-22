@@ -6,7 +6,7 @@ require './import_config.rb'
 
 import_config
 
-data = import_2
+data = import
 
 get '/' do
 	@data = data
@@ -27,6 +27,12 @@ get '/tags/tags' do
 	tags = @data["tags_global"]
 	content_type :json
 	tags.to_json
+end
+
+get '/data' do
+	@data = data
+	content_type :json
+	data.to_json
 end
 
 get '/tags/tags/:id' do

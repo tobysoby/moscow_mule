@@ -3,27 +3,6 @@
 # an array of feature-hashes: feature = {"id" => id, "name" => name, "description" => description, "scenarios" => [scenario_ids], "feature_file" => feature_file}
 # an array of tag-hashes: 
 
-class Scenario
-	attr_accessor :id, :feature_id, :name, :description, :steps, :tags
-
-	def initialize(options)
-		@id = options[:id]
-		@feature_id = options[:feature_id]
-		@name = options[:name]
-		@description = options[:description]
-		@steps = options[:steps]
-		@tags = options[:tags]
-	end
-
-	def self.all
-    	ObjectSpace.each_object(self).to_a
-  	end
-
-  	def self.count
-    	all.count
-  	end
-end
-
 def import_2
 	#define the return hash
 	data = Hash.new
@@ -59,6 +38,7 @@ def import_2
 
 	#get all Tags
 	scenarios.each do |scenario|
+	end
 
 
 	puts scenarios
