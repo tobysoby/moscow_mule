@@ -1,0 +1,17 @@
+<div class="content">
+	<!-- set the scenarios -->
+	<div id='scenario_' class='panel panel-default' ng-repeat="scenario in scenariosInFeature">
+		<!-- set the scenario title -->
+		<div class='panel-heading'>{{scenario.title}}
+			<!-- set the scenario tags as labels -->
+			<span class='label label-default' ng-repeat="tag in scenario.tags">{{tag}}</span>
+			<a class="btn btn-primary" href="" role="button" ng-click="addToTestRun(scenario)">Link</a>
+		</div>
+		<!-- set the scenario description -->
+		<div class='panel-body'><p>{{scenario.description}}</p></div>
+		<!-- set the scenario steps -->
+		<ul class='list-group'>
+			<li class='list-group-item' ng-repeat="step in scenario.steps">{{step}}</li>
+		</ul>
+	</div>
+</div>
