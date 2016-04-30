@@ -5,7 +5,7 @@
 		<div class='panel-heading'>{{scenario.title}}
 			<!-- set the scenario tags as labels -->
 			<span class='label label-default' ng-repeat="tag in scenario.tags">{{tag}}</span>
-			<a class="btn btn-primary" href="" role="button" ng-click="addToTestRun(scenario)">Link</a>
+			<a class="btn btn-primary" href="" role="button" ng-click="addToTestRun(scenario)"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>
 		</div>
 		<!-- set the scenario description -->
 		<div class='panel-body'><p>{{scenario.description}}</p></div>

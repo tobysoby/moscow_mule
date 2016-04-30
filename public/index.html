@@ -54,7 +54,7 @@
 							<a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">TestRun <span class="caret"></span></a>
 							<ul class="dropdown-menu">
 								<li><a>Number of Tests to run: {{testsToRun.length}}</a></li>
-								<li><a href="#">Run the Tests</a></li>
+								<li><a href="#runtests" ng-click="startRunningTests()">Run the Tests</a></li>
 								<li><a href="#">Something else here</a></li>
 								<li role="separator" class="divider"></li>
 								<li class="dropdown-header">Nav header</li>
@@ -79,9 +79,9 @@
 				</div>
 				<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 					<div class="row">
-						<div class="col-md-9 main" ng-view>
 
-						</div>
+						<div class="col-md-9 main" ng-view></div>
+
 						<div class="col-md-3">
 							<ul class="list-group">
 								<h5 class="list-group-item-heading">Testers</h5>

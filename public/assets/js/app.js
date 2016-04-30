@@ -8,9 +8,9 @@ moscowMuleApp.config(['$routeProvider', function($routeProvider) {
 		templateUrl: 'partials/single_feature.html',
 		controller: 'FeaturesCtrl'
 	}).
-	when('/phones/:phoneId', {
-		templateUrl: 'partials/phone-detail.html',
-		controller: 'PhoneDetailCtrl'
+	when('/runtests', {
+		templateUrl: 'partials/run_tests.html',
+		controller: 'RunTestsCtrl'
 	}).
 	otherwise({
 		redirectTo: '/phones'
@@ -55,5 +55,31 @@ moscowMuleApp.controller('FeaturesCtrl', function($scope, $http){
 			//add it!
 			$scope.$parent.testsToRun.push(scenario);
 		}
-	}
+	};
+	$scope.startRunningTests = function() {
+		//set the test_index
+		$scope.test_index = -1;
+		//set the text of the button on the test_page
+		$scope.buttonText = "Start running tests";
+	};
+});
+
+moscowMuleApp.controller('RunTestsCtrl', function($scope){
+	$scope.setTest = function() {
+		//get the current test_index
+		test_index = $scope.test_index;
+		//raise the test_index
+		test_index += 1;
+		//get the scenario which should be tested
+		$scope.scenarioToTest = $scope.testsToRun[test_index];
+		//set the buttons text
+		if (test_index < $scope.testsToRun.length-1) {
+			$scope.buttonText = "Next Test";
+		}
+		else {
+			$scope.buttonText = "Show test results";
+		}
+		//write the test_index into the scope
+		$scope.test_index = test_index;
+	};
 });
