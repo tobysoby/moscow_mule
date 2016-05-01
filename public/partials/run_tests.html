@@ -1,4 +1,5 @@
 <div class="content">
+	<span>Run a selection of tests!</span>
 	<!-- show an overview of all the runable tests -->
 	<div class="list-group">
 		<a href="#" class="list-group-item" ng-repeat="test in testsToRun">
@@ -6,7 +7,7 @@
 		</a>
 	</div>
 	<!-- show the single runnable scenarios -->
-	<div id='scenario_' class='panel panel-default'>
+	<div id='scenario_' class='panel panel-default' ng-hide="checkIfTestIndexMinusOne()">
 		<!-- set the scenario title -->
 		<div class='panel-heading'>{{scenarioToTest.title}}
 			<!-- set the scenario tags as labels -->
@@ -19,6 +20,23 @@
 			<li class='list-group-item' ng-repeat="step in scenarioToTest.steps">{{step}}</li>
 		</ul>
 	</div>
+	<!-- enter test results -->
+    <label ng-hide="checkIfTestIndexMinusOne()">Test result?</label>
+    <div class="form-group" ng-hide="checkIfTestIndexMinusOne()">
+        <div class="radio">
+            <label>
+                <input type="radio" name="result" value="okay" ng-model="scenarioToTest.result">
+                Test okay!
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" name="result" value="not_okay" ng-model="scenarioToTest.result">
+                Test not okay!
+            </label>
+        </div>
+    </div>
+
 	<!-- show the next or back button -->
 	<button type="button" class="btn" ng-click="setTest()">{{buttonText}}</button>
 </div>

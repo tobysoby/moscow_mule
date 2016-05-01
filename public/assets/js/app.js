@@ -72,6 +72,7 @@ moscowMuleApp.controller('RunTestsCtrl', function($scope){
 		test_index += 1;
 		//get the scenario which should be tested
 		$scope.scenarioToTest = $scope.testsToRun[test_index];
+		$scope.scenarioToTest.result = false;
 		//set the buttons text
 		if (test_index < $scope.testsToRun.length-1) {
 			$scope.buttonText = "Next Test";
@@ -82,4 +83,9 @@ moscowMuleApp.controller('RunTestsCtrl', function($scope){
 		//write the test_index into the scope
 		$scope.test_index = test_index;
 	};
+	$scope.checkIfTestIndexMinusOne = function() {
+		if ($scope.test_index == -1 || $scope.test_index == null) {
+			return true;
+		}
+	}
 });
