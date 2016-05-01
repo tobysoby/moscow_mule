@@ -25,16 +25,19 @@
     <div class="form-group" ng-hide="checkIfTestIndexMinusOne()">
         <div class="radio">
             <label>
-                <input type="radio" name="result" value="okay" ng-model="scenarioToTest.result">
+                <input type="radio" name="result" value="true" ng-model="scenarioToTest.result">
                 Test okay!
             </label>
         </div>
         <div class="radio">
             <label>
-                <input type="radio" name="result" value="not_okay" ng-model="scenarioToTest.result">
+                <input type="radio" name="result" value="false" ng-model="scenarioToTest.result">
                 Test not okay!
             </label>
         </div>
+        <div>
+			<input type="text" class="form-control" ng-model="scenarioToTest.additional_info">
+		</div>
     </div>
 
 	<!-- show the next or back button -->
