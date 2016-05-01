@@ -1,13 +1,16 @@
 <div class="content">
-	<span>Run a selection of tests!</span>
+	<div ng-if="runTestState==0">
+		<span><b>Run a selection of tests!</b></span><br/>
+		<span>Here is an overview of your selected tests:</span>
+	</div><br/>
 	<!-- show an overview of all the runable tests -->
 	<div class="list-group">
-		<a href="#" class="list-group-item" ng-repeat="test in testsToRun">
+		<li class="list-group-item" ng-repeat="test in testsToRun" ng-click="setTest($index)" ng-class="{'list-group-item-success': test.result=='true', 'list-group-item-warning': test.result==null, 'list-group-item-danger': test.result=='false'}">
 			{{test.title}}
-		</a>
+		</li>
 	</div>
 	<!-- show the single runnable scenarios -->
-	<div id='scenario_' class='panel panel-default' ng-hide="checkIfTestIndexMinusOne()">
+	<div id='scenario_' class='panel panel-default' ng-if="runTestState==1 || runTestState==2" class="animate-if">
 		<!-- set the scenario title -->
 		<div class='panel-heading'>{{scenarioToTest.title}}
 			<!-- set the scenario tags as labels -->
@@ -21,8 +24,8 @@
 		</ul>
 	</div>
 	<!-- enter test results -->
-    <label ng-hide="checkIfTestIndexMinusOne()">Test result?</label>
-    <div class="form-group" ng-hide="checkIfTestIndexMinusOne()">
+    <label ng-if="runTestState==1 || runTestState==2" class="animate-if">Test result?</label>
+    <div class="form-group" ng-if="runTestState==1 || runTestState==2" class="animate-if">
         <div class="radio">
             <label>
                 <input type="radio" name="result" value="true" ng-model="scenarioToTest.result">
@@ -41,5 +44,8 @@
     </div>
 
 	<!-- show the next or back button -->
-	<button type="button" class="btn" ng-click="setTest()">{{buttonText}}</button>
+	<button type="button" class="btn" ng-click="setNextTest()" ng-if="runTestState==0" class="animate-if">{{buttonStartTestsText}}</button>
+	<button type="button" class="btn" ng-click="setLastTest()" ng-if="runTestState==1&&test_index!=0||runTestState==2" class="animate-if">{{buttonLastTestText}}</button>
+	<button type="button" class="btn" ng-click="setNextTest()" ng-if="runTestState==1" class="animate-if">{{buttonNextTestText}}</button>
+	<button type="button" class="btn" ng-click="showResults()" ng-if="runTestState==2" class="animate-if">{{buttonShowResultsText}}</button>
 </div>

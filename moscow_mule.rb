@@ -13,42 +13,42 @@ get '/' do
 	File.read(File.join('public', 'index.html'))
 end
 
-get '/features' do
+get '/api/features' do
 	content_type :json
 	data["features"].to_json
 end
 
-get '/features/:id' do
+get '/api/features/:id' do
 	content_type :json
 	data["features"][params['id'].to_i].to_json
 end
 
-get '/scenarios' do
+get '/api/scenarios' do
 	content_type :json
 	data["scenarios"].to_json
 end
 
-get '/tags/global' do
+get '/api/tags/global' do
 	content_type :json
 	data["tags_global"].to_json
 end
 
-get '/tags/testplans' do
+get '/api/tags/testplans' do
 	content_type :json
 	data["tags_testplans"].to_json
 end
 
-get '/tags/platforms' do
+get '/api/tags/platforms' do
 	content_type :json
 	data["tags_platforms"].to_json
 end
 
-get '/tags/testers' do
+get '/api/tags/testers' do
 	content_type :json
 	data["tags_testers"].to_json
 end
 
-get '/data' do
+get '/api/data' do
 	content_type :json
 	data.to_json
 end
