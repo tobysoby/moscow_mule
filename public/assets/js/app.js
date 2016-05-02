@@ -12,8 +12,9 @@ moscowMuleApp.config(['$routeProvider', function($routeProvider) {
 		templateUrl: 'partials/run_tests.html',
 		controller: 'RunTestsCtrl'
 	}).
-	otherwise({
-		redirectTo: '/phones'
+	when('/showresults', {
+		templateUrl: 'partials/show_results.html',
+		controller: 'RunTestsCtrl'
 	});
 }]);
 

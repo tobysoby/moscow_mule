@@ -47,5 +47,5 @@
 	<button type="button" class="btn" ng-click="setNextTest()" ng-if="runTestState==0" class="animate-if">{{buttonStartTestsText}}</button>
 	<button type="button" class="btn" ng-click="setLastTest()" ng-if="runTestState==1&&test_index!=0||runTestState==2" class="animate-if">{{buttonLastTestText}}</button>
 	<button type="button" class="btn" ng-click="setNextTest()" ng-if="runTestState==1" class="animate-if">{{buttonNextTestText}}</button>
-	<button type="button" class="btn" ng-click="showResults()" ng-if="runTestState==2" class="animate-if">{{buttonShowResultsText}}</button>
+	<a href="#showresults" class="btn btn-default" ng-click="showResults()" ng-if="runTestState==2" class="animate-if">{{buttonShowResultsText}}</a>
 </div>
