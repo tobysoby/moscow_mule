@@ -106,5 +106,16 @@ moscowMuleApp.controller('RunTestsCtrl', function($scope){
 		if ($scope.test_index == -1 || $scope.test_index == null) {
 			return true;
 		}
-	}
+	};
+	$scope.showResults = function() {
+		for (var i = 0; i < $scope.testsToRun.length; i++) {
+			console.log($scope.testsToRun[i]);
+			if ($scope.testsToRun[i].result == "true") {
+				$scope.testsToRun[i].result_show = "(/)";
+			}
+			if ($scope.testsToRun[i].result == "false") {
+				$scope.testsToRun[i].result_show = "(x)";
+			}
+		}
+	};
 });
