@@ -2,7 +2,7 @@
 	<div ng-if="runTestState==0">
 		<span><b>Run a selection of tests!</b></span><br/>
 		<span>Here is an overview of your selected tests:</span><br/>
-		<span>testRunName: {{testsToRun.testRunName}}</span><br/>
+		<span>testRunName: {{testsToRun.testRunName}} | <a href="#" ng-click="editTestRunName">Edit</a></span><br/>
 		<span>testPlatformName: {{testsToRun.testPlatformName}}</span><br/>
 	</div>
 	<div ng-if="runTestState==1 || runTestState==2">

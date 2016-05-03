@@ -5,12 +5,20 @@ var moscowMuleApp = angular.module('moscowMuleApp', [
 moscowMuleApp.config(['$routeProvider', function($routeProvider) {
 	$routeProvider.
 	when('/showfeature', {
-		templateUrl: 'partials/single_feature.html',
+		templateUrl: 'partials/show_feature.html',
+		controller: 'FeaturesCtrl'
+	}).
+	when('/showscenario', {
+		templateUrl: 'partials/show_scenario.html',
 		controller: 'FeaturesCtrl'
 	}).
 	when('/runtests', {
 		templateUrl: 'partials/run_tests.html',
 		controller: 'RunTestsCtrl'
+	}).
+	when('/showtags', {
+		templateUrl: 'partials/show_tags.html',
+		controller: 'FeaturesCtrl'
 	}).
 	when('/showresults', {
 		templateUrl: 'partials/show_results.html',
@@ -50,6 +58,9 @@ moscowMuleApp.controller('FeaturesCtrl', function($scope, $http){
 			$scope.scenariosInFeature.push($scope.scenarios[scenarioId]);
 		}
 	};
+	$scope.setScenario = function(scenario) {
+		$scope.currentScenario = scenario;
+	};
 	$scope.addToTestRun = function(scenario) {
 		//if the scenario is not yet in the scenarios to run array
 		if ($scope.$parent.testsToRun.indexOf(scenario) == -1) {
@@ -62,6 +73,15 @@ moscowMuleApp.controller('FeaturesCtrl', function($scope, $http){
 		$scope.test_index = -1;
 		//set run_test_state
 		$scope.runTestState = 0;
+	};
+	$scope.setTag = function(tag) {
+		//get the scenarios
+		var scenariosToShowIds = tag.scenarios;
+		console.log(scenariosToShowIds);
+		$scope.scenariosToShow = [];
+		for (var i = 0; i < scenariosToShowIds.length; i++) {
+			$scope.scenariosToShow.push($scope.scenarios[scenariosToShowIds[i]]);
+		}
 	};
 });
 
@@ -109,7 +129,6 @@ moscowMuleApp.controller('RunTestsCtrl', function($scope){
 	};
 	$scope.showResults = function() {
 		for (var i = 0; i < $scope.testsToRun.length; i++) {
-			console.log($scope.testsToRun[i]);
 			if ($scope.testsToRun[i].result == "true") {
 				$scope.testsToRun[i].result_show = "(/)";
 			}

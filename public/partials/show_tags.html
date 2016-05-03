@@ -1,0 +1,9 @@
+<div class="content">
+	Tags:
+	<span ng-repeat="scenario in scenariosToShow">{{scenario.title}}</span>
+	<div class="list-group">
+		<a href="#showScenario" class="list-group-item" ng-repeat="scenario in scenariosToShow" ng-click="setScenario(scenario)" ng-class="{'list-group-item-success': test.result=='true', 'list-group-item-warning': test.result==null, 'list-group-item-danger': test.result=='false'}">
+			{{scenario.title}}
+		</a>
+	</div>
+</div>

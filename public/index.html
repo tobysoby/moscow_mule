@@ -86,28 +86,28 @@
 							<ul class="list-group">
 								<h5 class="list-group-item-heading">Testers</h5>
 								<li class="list-group-item" ng-repeat="tag_tester in tags_testers">
-									<a href="#">{{tag_tester.title}}</a>
+									<a href="#showtags" ng-click="setTag(tag_tester)">{{tag_tester.title}}</a>
 									<span class="badge">{{tag_tester.scenarios.length}}</span>
 								</li>
 							</ul>
 							<ul class="list-group">
 								<h5 class="list-group-item-heading">Platforms</h5>
 								<li class="list-group-item" ng-repeat="tag_platform in tags_platforms">
-									<a href="#">{{tag_platform.title}}</a>
+									<a href="#showtags" ng-click="setTag(tag_platform)">{{tag_platform.title}}</a>
 									<span class="badge">{{tag_platform.scenarios.length}}</span>
 								</li>
 							</ul>
 							<ul class="list-group">
 								<h5 class="list-group-item-heading">Testplans</h5>
 								<li class="list-group-item" ng-repeat="tag_testplan in tags_testplans">
-									<a href="#">{{tag_testplan.title}}</a>
+									<a href="#showtags" ng-click="setTag(tag_testplan)">{{tag_testplan.title}}</a>
 									<span class="badge">{{tag_testplan.scenarios.length}}</span>
 								</li>
 							</ul>
 							<ul class="list-group">
 								<h5 class="list-group-item-heading">Tags</h5>
 								<li class="list-group-item" ng-repeat="tag_global in tags_global">
-									<a href="#">{{tag_global.title}}</a>
+									<a href="#showtags" ng-click="setTag(tag_global)">{{tag_global.title}}</a>
 									<span class="badge">{{tag_global.scenarios.length}}</span>
 								</li>
 							</ul>
