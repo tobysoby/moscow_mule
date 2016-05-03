@@ -59,7 +59,7 @@ moscowMuleApp.controller('FeaturesCtrl', function($scope, $http){
 		}
 	};
 	$scope.setScenario = function(scenario) {
-		$scope.currentScenario = scenario;
+		$scope.$parent.currentScenario = scenario;
 	};
 	$scope.addToTestRun = function(scenario) {
 		//if the scenario is not yet in the scenarios to run array
@@ -77,7 +77,6 @@ moscowMuleApp.controller('FeaturesCtrl', function($scope, $http){
 	$scope.setTag = function(tag) {
 		//get the scenarios
 		var scenariosToShowIds = tag.scenarios;
-		console.log(scenariosToShowIds);
 		$scope.scenariosToShow = [];
 		for (var i = 0; i < scenariosToShowIds.length; i++) {
 			$scope.scenariosToShow.push($scope.scenarios[scenariosToShowIds[i]]);
