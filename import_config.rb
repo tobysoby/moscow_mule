@@ -5,5 +5,8 @@ def import_config
 			@location_features = config_line.sub("location_features=", "")
 			puts @location_features
 		end
+		if config_line.index("language")
+			@language = config_line.sub("language=", "")
+		end
 	end
 end

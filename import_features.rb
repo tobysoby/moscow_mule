@@ -4,6 +4,10 @@
 # an array of tag-hashes: tags_global = {"id" => id, "title" => title, "scenarios" => [scenario_ids]}
 
 def import_2
+	# set the language
+	keywords_locale = set_language(@language)
+	puts keywords_locale
+
 	#define the return hash
 	data = Hash.new
 
@@ -16,11 +20,18 @@ def import_2
 	tags_platforms = Array.new
 
 	#make a run for all features
-	feature_files = Dir[@location_features]
+
+	# a hack!!!
+	old_path = Dir.pwd
+	Dir.chdir("../features")
+	feature_files = Dir.glob("*.*")
+	Dir.chdir(old_path)
+	puts Dir.pwd
+	#puts feature_files
 	feature_files.each_with_index do |feature_file, index_feature_file|
 		feature = Hash.new
 		#load and process feature_file
-		feature = load_and_process_feature_file(feature_file)
+		feature = load_and_process_feature_file("../features/"+ feature_file, keywords_locale)
 		feature["id"] = index_feature_file
 		features.push feature
 	end
@@ -33,7 +44,7 @@ def import_2
 		feature_id = feature["id"]
 		feature_file = feature["feature_file"]
 		#load and process the feature_file, get back an array of scenarios and the new scenario_id
-		scenarios_per_feature, scenario_id = feature_file_get_scenarios(feature_file, scenario_id, feature_id)
+		scenarios_per_feature, scenario_id = feature_file_get_scenarios(feature_file, scenario_id, feature_id, keywords_locale)
 		#incorporate/append the array of scenarios into the overall array of scenarios
 		scenarios.push(*scenarios_per_feature)
 		#get all scenario_ids and put em into the feature_hash
@@ -55,22 +66,22 @@ def import_2
 	return data
 end
 
-def load_and_process_feature_file(feature_file)
+def load_and_process_feature_file(feature_file, keywords_locale)
 	feature = Hash.new
 	content = File.readlines feature_file
 	content.each_with_index do |line, index_feature_line|
 		#if the line starts with Funktionalität
 		feature["feature_file"] = File.expand_path(feature_file)
-		if line[0..13] == "Funktionalität"
+		if line[0..keywords_locale["feature"].length-1] == keywords_locale["feature"]
 			#this line is the title of the Funktionalität
-			feature["title"] = line.sub("Funktionalität: ", "")
+			feature["title"] = line.sub(keywords_locale["feature"] + ": ", "")
 			#check the following lines
 			#loop through 1..100, this should usually be enough for the description of a feature
 			feature_description = ""
 			for i in 1..100
 				next_line = content[index_feature_line+i]
 				#if the next line does not start with Szenario or is a Tag
-				if (!next_line.include? "Szenario") && (!next_line.include? "@")
+				if (!next_line.include? keywords_locale["scenario"]) && (!next_line.include? "@")
 					feature_description = feature_description + next_line
 				else
 					break
@@ -82,11 +93,11 @@ def load_and_process_feature_file(feature_file)
 	return feature
 end
 
-def feature_file_get_scenarios(feature_file, scenario_id, feature_id)
+def feature_file_get_scenarios(feature_file, scenario_id, feature_id, keywords_locale)
 	scenarios = Array.new
 	content = File.readlines feature_file
 	content.each_with_index do |line, index_feature_line|
-		if line.include? "Szenario"
+		if line.include?(keywords_locale["scenario"] + ":") || line.include?(keywords_locale["scenario_outline"] + ":")
 			#there is a Szenario
 			scenario = Hash.new
 			#set the scenario-id
@@ -95,8 +106,13 @@ def feature_file_get_scenarios(feature_file, scenario_id, feature_id)
 			scenario["feature_id"] = feature_id
 			scenario_steps = Array.new
 			scenario_tags = Array.new
-			#this line is the title of the Szenario
-			scenario["title"] = line.sub!("Szenario: ", "")
+			#this line is the title of the Szenario of Scenario Outline
+			if line.include? keywords_locale["scenario"] + ":"
+				scenario["title"] = line.sub!(keywords_locale["scenario"] + ": ", "")
+			elsif line.include? keywords_locale["scenario_outline"] + ":"
+				scenario["title"] = line.sub!(keywords_locale["scenario_outline"] + ": ", "")
+			end
+					
 			#check the following line
 			#loop through 1..100, this should usually be enough for the description of a scenario and the steps
 			scenario_description = ""
@@ -108,7 +124,7 @@ def feature_file_get_scenarios(feature_file, scenario_id, feature_id)
 					#if its not one of the steps
 					if next_line[0] == "#"
 						scenario_description = scenario_description + "<br>" + next_line
-					elsif (next_line.include? "Angenommen") || (next_line.include? "Wenn") || (next_line.include? "Dann") 
+					elsif (next_line.include? keywords_locale["given"]) || (next_line.include? keywords_locale["when"]) || (next_line.include? keywords_locale["then"]) 
 						scenario_steps.push next_line
 					else
 						break
@@ -190,4 +206,20 @@ def check_tag_array(tag_from_scenario, scenario_id, tags_array)
 		tag_hash["scenarios"] = Array.new.push scenario_id
 		tags_array.push tag_hash
 	end
+end
+
+def set_language(language)
+	keywords_locale = Hash.new
+
+	if language == "english"
+		keywords_locale["feature"] = "Feature"
+		keywords_locale["scenario"] = "Scenario"
+		keywords_locale["scenario_outline"] = "Scenario Outline"
+		keywords_locale["given"] = "Given"
+		keywords_locale["when"] = "When"
+		keywords_locale["then"] = "Then"
+		keywords_locale["and"] = "And"
+	end
+
+	return keywords_locale
 end
