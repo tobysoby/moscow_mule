@@ -58,14 +58,7 @@ moscowMuleApp.controller('FeaturesCtrl', function($scope, $http){
 	});
 	$scope.setFeature = function(feature) {
 		$scope.currentFeature = feature;
-		//$scope.scenariosInFeature = [];
 		$scope.scenariosInFeature = feature["scenarioDefinitions"];
-
-		//var scenariosInFeatureIds = feature.scenarios;
-		//for (var i = 0; i<scenariosInFeatureIds.length; i++) {
-		//	var scenarioId = parseInt(scenariosInFeatureIds[i]);
-		//	$scope.scenariosInFeature.push($scope.scenarios[scenarioId]);
-		//}
 	};
 	$scope.setScenario = function(scenario) {
 		$scope.$parent.currentScenario = scenario;

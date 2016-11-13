@@ -3,17 +3,6 @@
 require 'gherkin/parser'
 require 'gherkin/pickles/compiler'
 
-def import_x
-	file = File.open("../features/crashreporter.feature", "r:UTF-8")
-	contents = file.read
-
-	parser = Gherkin::Parser.new
-	gherkin_document = parser.parse(contents)
-	puts "gherkin_document: " + gherkin_document.to_s
-	pickles = Gherkin::Pickles::Compiler.new.compile(gherkin_document, "../features/epg.feature")
-	puts "pickles: " + pickles.to_s
-end
-
 def import
 	data = Hash.new
 
@@ -33,9 +22,46 @@ def import
 		features.push gherkin_document
 	end
 	data["features"] = features
+	data["tags"] = read_tags(features)
 	return data
 end
 
+def read_tags (features)
+	# get the tags from the features
+	# get the tags from the scenarios
+	tags = Hash.new
+	features.each do |feature|
+		puts feature
+		feature[:scenarioDefinitions].each do |scenario|
+			# if there are tags
+			if scenario[:tags].size != 0
+				scenario[:tags].each do |tag|
+					# if the tag already is in the hash
+					if tags.key?(tag[:name])
+						arr = tags[tag[:name]]["scenarios"]
+						arr.push scenario[:name]
+						foo = Hash.new
+						foo["scenarios"] = arr
+						foo["name"] = tag[:name]
+						tags[tag[:name]] = foo
+					# if not
+					else
+						arr = Array.new
+						arr.push scenario[:name]
+						foo = Hash.new
+						foo["scenarios"] = arr
+						foo["name"] = tag[:name]
+						tags[tag[:name]] = foo
+					end
+				end
+			end
+		end
+	end
+	# which tags are for testers
+	# which tags are for platforms
+	# which tags are for testplans
+	return tags
+end
 
 =begin
 #what should the model look like?

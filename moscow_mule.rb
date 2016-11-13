@@ -30,7 +30,7 @@ end
 
 get '/api/tags/global' do
 	content_type :json
-	data["tags_global"].to_json
+	data["tags"].to_json
 end
 
 get '/api/tags/testplans' do
