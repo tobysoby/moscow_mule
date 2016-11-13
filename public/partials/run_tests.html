@@ -17,21 +17,21 @@
 	<!-- show an overview of all the runable tests -->
 	<div class="list-group">
 		<li class="list-group-item" ng-repeat="test in testsToRun" ng-click="setTest($index)" ng-class="{'list-group-item-success': test.result=='true', 'list-group-item-warning': test.result==null, 'list-group-item-danger': test.result=='false'}">
-			{{test.title}}
+			{{test.name}}
 		</li>
 	</div>
 	<!-- show the single runnable scenarios -->
 	<div id='scenario_' class='panel panel-default' ng-if="runTestState==1 || runTestState==2" class="animate-if">
 		<!-- set the scenario title -->
-		<div class='panel-heading'>{{scenarioToTest.title}}
+		<div class='panel-heading'>{{scenarioToTest.name}}
 			<!-- set the scenario tags as labels -->
-			<span class='label label-default' ng-repeat="tag in scenarioToTest.tags">{{tag}}</span>
+			<span class='label label-default' ng-repeat="tag in scenarioToTest.tags">{{tag.name}}</span>
 		</div>
 		<!-- set the scenario description -->
-		<div class='panel-body'><p>{{scenarioToTest.description}}</p></div>
+		<div class='panel-body'><p>{{scenarioToTest.name}}</p></div>
 		<!-- set the scenario steps -->
 		<ul class='list-group'>
-			<li class='list-group-item' ng-repeat="step in scenarioToTest.steps">{{step}}</li>
+			<li class='list-group-item' ng-repeat="step in scenarioToTest.steps">{{step.keyword}} {{step.text}}</li>
 		</ul>
 	</div>
 	<!-- enter test results -->

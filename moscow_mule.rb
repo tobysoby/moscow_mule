@@ -55,6 +55,6 @@ end
 
 get '/reload/' do
 	import_config
-	data = import_2
+	data = import
 	redirect to('/')
 end

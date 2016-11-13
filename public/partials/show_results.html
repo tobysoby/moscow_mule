@@ -5,13 +5,13 @@
 	<!-- show an overview of all the runable tests -->
 	<div class="list-group">
 		<li class="list-group-item" ng-repeat="test in testsToRun" ng-click="setTest($index)" ng-class="{'list-group-item-success': test.result=='true', 'list-group-item-warning': test.result==null, 'list-group-item-danger': test.result=='false'}">
-			{{test.title}}
+			{{test.name}}
 		</li>
 	</div>
 
 	<span>copy the following text into JIRA:</span>
 	<div class="well">
 		<span>||testcase||additional info||result||<br/></span>
-		<span ng-repeat="test in testsToRun">|{{test.title}}|{{test.additional_info}}|{{test.result_show}}|<br/></span>
+		<span ng-repeat="test in testsToRun">|{{test.name}}|{{test.additional_info}}|{{test.result_show}}|<br/></span>
 	</div>
 </div>

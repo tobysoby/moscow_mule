@@ -23,6 +23,14 @@ moscowMuleApp.config(['$routeProvider', function($routeProvider) {
 	when('/showresults', {
 		templateUrl: 'partials/show_results.html',
 		controller: 'RunTestsCtrl'
+	}).
+	when('/', {
+		templateUrl: 'partials/home.html',
+		controller: 'FeaturesCtrl'
+	}).
+	when('/about', {
+		templateUrl: 'partials/about.html',
+		controller: 'FeaturesCtrl'
 	});
 }]);
 

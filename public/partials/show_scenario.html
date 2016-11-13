@@ -2,16 +2,16 @@
 	<!-- set the scenarios -->
 	<div id='scenario_' class='panel panel-default'>
 		<!-- set the scenario title -->
-		<div class='panel-heading'>{{currentScenario.title}}
+		<div class='panel-heading'>{{currentScenario.name}}
 			<!-- set the scenario tags as labels -->
-			<span class='label label-default' ng-repeat="tag in currentScenario.tags">{{tag}}</span>
+			<span class='label label-default' ng-repeat="tag in currentScenario.tags">{{tag.name}}</span>
 			<a class="btn btn-primary" href="" role="button" ng-click="addToTestRun(currentScenario)"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>
 		</div>
 		<!-- set the scenario description -->
-		<div class='panel-body'><p>{{currentScenario.description}}</p></div>
+		<div class='panel-body'><p>{{currentScenario.name}}</p></div>
 		<!-- set the scenario steps -->
 		<ul class='list-group'>
-			<li class='list-group-item' ng-repeat="step in currentScenario.steps">{{step}}</li>
+			<li class='list-group-item' ng-repeat="step in currentScenario.steps">{{step.keyword}} {{step.text}}</li>
 		</ul>
 	</div>
 </div>
