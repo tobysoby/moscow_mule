@@ -6,7 +6,7 @@ require './import_config.rb'
 
 import_config
 
-data = import_2
+data = import
 
 get '/' do
 	@data = data

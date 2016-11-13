@@ -1,3 +1,43 @@
+# encoding: utf-8
+
+require 'gherkin/parser'
+require 'gherkin/pickles/compiler'
+
+def import_x
+	file = File.open("../features/crashreporter.feature", "r:UTF-8")
+	contents = file.read
+
+	parser = Gherkin::Parser.new
+	gherkin_document = parser.parse(contents)
+	puts "gherkin_document: " + gherkin_document.to_s
+	pickles = Gherkin::Pickles::Compiler.new.compile(gherkin_document, "../features/epg.feature")
+	puts "pickles: " + pickles.to_s
+end
+
+def import
+	data = Hash.new
+
+	features = Array.new
+
+	old_path = Dir.pwd
+	Dir.chdir("../features")
+	feature_files = Dir.glob("*.*")
+	Dir.chdir(old_path)
+
+	feature_files.each_with_index do |feature_file, index_feature_file|
+		file = File.open("../features/" + feature_file, "r:UTF-8")
+		content = file.read
+		parser = Gherkin::Parser.new
+		gherkin_document = parser.parse(content)
+		#pickles = Gherkin::Pickles::Compiler.new.compile(gherkin_document, "../features/" + feature_file)
+		features.push gherkin_document
+	end
+	data["features"] = features
+	return data
+end
+
+
+=begin
 #what should the model look like?
 # an array of scenario-hashes: scenario = {"id" => id, feature_id => "feature_id", "title" => title, "description" => description, "steps" => [steps], "tags" => [tags]}
 # an array of feature-hashes: feature = {"id" => id, "title" => title, "description" => description, "scenarios" => [scenario_ids], "feature_file" => feature_file}
@@ -223,3 +263,4 @@ def set_language(language)
 
 	return keywords_locale
 end
+=end
