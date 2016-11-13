@@ -23,7 +23,7 @@ def import_2
 
 	# a hack!!!
 	old_path = Dir.pwd
-	Dir.chdir("../features")
+	Dir.chdir("../dw-integration/int-b/src/test/resources/de/dw/integration/cda/ltr/")
 	feature_files = Dir.glob("*.*")
 	Dir.chdir(old_path)
 	puts Dir.pwd
@@ -31,7 +31,7 @@ def import_2
 	feature_files.each_with_index do |feature_file, index_feature_file|
 		feature = Hash.new
 		#load and process feature_file
-		feature = load_and_process_feature_file("../features/"+ feature_file, keywords_locale)
+		feature = load_and_process_feature_file("../dw-integration/int-b/src/test/resources/de/dw/integration/cda/ltr/"+ feature_file, keywords_locale)
 		feature["id"] = index_feature_file
 		features.push feature
 	end
@@ -124,7 +124,7 @@ def feature_file_get_scenarios(feature_file, scenario_id, feature_id, keywords_l
 					#if its not one of the steps
 					if next_line[0] == "#"
 						scenario_description = scenario_description + "<br>" + next_line
-					elsif (next_line.include? keywords_locale["given"]) || (next_line.include? keywords_locale["when"]) || (next_line.include? keywords_locale["then"]) 
+					elsif (next_line.include? keywords_locale["given"]) || (next_line.include? keywords_locale["when"]) || (next_line.include? keywords_locale["then"]) || (next_line.include? keywords_locale["and"])
 						scenario_steps.push next_line
 					else
 						break
