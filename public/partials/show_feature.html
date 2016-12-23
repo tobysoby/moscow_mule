@@ -1,4 +1,18 @@
 <div class="content">
+	<!-- set the background -->
+	<div ng-if="background != null">
+		<div id='background_' class='panel panel-default'>
+			<div class='panel-heading'>
+				Background: 
+			</div>
+			<!-- set the scenario description -->
+			<div class='panel-body'>
+				<table class='table-striped'>
+					<tr ng-repeat="step in background.steps"><td>{{step.keyword}} {{step.text}}</td></tr>
+				</table>
+			</div>
+		</div>
+	</div>
 	<!-- set the scenarios -->
 	<div ng-repeat="scenario in scenariosInFeature">
 		<div id='scenario_' class='panel panel-default'>
