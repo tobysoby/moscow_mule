@@ -8,5 +8,8 @@ def import_config
 		if config_line.index("language")
 			@language = config_line.sub("language=", "")
 		end
+		if config_line.index("port")
+			@port = config_line.sub("port=", "")
+		end
 	end
 end

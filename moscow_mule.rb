@@ -8,6 +8,8 @@ import_config
 
 data = import
 
+set :port, @port
+
 get '/' do
 	@data = data
 	File.read(File.join('public', 'index.html'))
