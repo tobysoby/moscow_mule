@@ -81,7 +81,8 @@ moscowMuleApp.controller('FeaturesCtrl', function($scope, $http){
 		var scenariosToShowIds = tag.scenarios;
 		$scope.scenariosToShow = [];
 		for (var i = 0; i < scenariosToShowIds.length; i++) {
-			$scope.scenariosToShow.push($scope.scenarios[scenariosToShowIds[i]]);
+			console.log($scope.scenarios[tag.scenarios[i][1]]);
+			$scope.scenariosToShow.push($scope.scenarios[tag.scenarios[i][1]]);
 		}
 	};
 });

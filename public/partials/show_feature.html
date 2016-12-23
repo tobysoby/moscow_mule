@@ -11,10 +11,12 @@
 				
 			</div>
 			<!-- set the scenario description -->
-			<div class='panel-body'><p>{{scenario.name}}</p></div>
+			<div class='panel-body'>
+				<p><b>{{scenario.name}}</b></p>
+				<table class='table-striped'>
+					<tr ng-repeat="step in scenario.steps"><td>{{step.keyword}} {{step.text}}</td></tr>
+				</table>
+			</div>
 		</div>
-		<table class='table-striped'>
-			<tr ng-repeat="step in scenario.steps"><td>{{step.keyword}} {{step.text}}</td></tr>
-		</table>
 	</div>
 </div>
