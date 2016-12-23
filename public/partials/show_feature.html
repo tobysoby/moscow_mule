@@ -1,19 +1,20 @@
 <div class="content">
 	<!-- set the scenarios -->
-	<div id='scenario_' class='panel panel-default' ng-repeat="scenario in scenariosInFeature">
-		<!-- set the scenario title -->
-		<div class='panel-heading'>
-			<a class="btn btn-primary" href="" role="button" ng-click="addToTestRun(scenario)"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>
-			{{scenario.name}}
-			<!-- set the scenario tags as labels -->
-			<span class='label label-default' ng-repeat="tag in scenario.tags">{{tag.name}}</span>
-			
+	<div ng-repeat="scenario in scenariosInFeature">
+		<div id='scenario_' class='panel panel-default'>
+			<!-- set the scenario title -->
+			<div class='panel-heading'>
+				<a class="btn btn-primary" href="" role="button" ng-click="addToTestRun(scenario)"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>
+				{{scenario.name}}
+				<!-- set the scenario tags as labels -->
+				<span class='label label-default' ng-repeat="tag in scenario.tags">{{tag.name}}</span>
+				
+			</div>
+			<!-- set the scenario description -->
+			<div class='panel-body'><p>{{scenario.name}}</p></div>
 		</div>
-		<!-- set the scenario description -->
-		<div class='panel-body'><p>{{scenario.name}}</p></div>
-		<!-- set the scenario steps -->
-		<ul class='list-group'>
-			<li class='list-group-item' ng-repeat="step in scenario.steps">{{step.keyword}} {{step.text}}</li>
-		</ul>
+		<table class='table-striped'>
+			<tr ng-repeat="step in scenario.steps"><td>{{step.keyword}} {{step.text}}</td></tr>
+		</table>
 	</div>
 </div>
