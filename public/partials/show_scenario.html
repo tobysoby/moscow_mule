@@ -8,7 +8,11 @@
 			<a class="btn btn-primary" href="" role="button" ng-click="addToTestRun(currentScenario)"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>
 		</div>
 		<!-- set the scenario description -->
-		<div class='panel-body'><p>{{currentScenario.name}}</p></div>
+		<div class='panel-body'>
+			<p>bubb</p>
+			<p ng-repeat="image in currentScenario.images"><img src={{image}} alt="image">bubb</p>
+			<p>{{currentScenario.name}}</p>
+		</div>
 		<!-- set the scenario steps -->
 		<ul class='list-group'>
 			<li class='list-group-item' ng-repeat="step in currentScenario.steps">{{step.keyword}} {{step.text}}</li>
