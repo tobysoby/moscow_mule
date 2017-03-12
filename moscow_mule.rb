@@ -8,7 +8,7 @@ import_config
 
 data = import
 
-set :port, @port
+set :port, @config[:port]
 
 get '/' do
 	@data = data
@@ -17,37 +17,37 @@ end
 
 get '/api/features' do
 	content_type :json
-	data["features"].to_json
+	data[:features].to_json
 end
 
 get '/api/features/:id' do
 	content_type :json
-	data["features"][params['id'].to_i].to_json
+	data[:features][params['id'].to_i].to_json
 end
 
 get '/api/scenarios' do
 	content_type :json
-	data["scenarios"].to_json
+	data[:scenarios].to_json
 end
 
 get '/api/tags/global' do
 	content_type :json
-	data["tags"].to_json
+	data[:tags][:global].to_json
 end
 
 get '/api/tags/testplans' do
 	content_type :json
-	data["tags_testplans"].to_json
+	data[:tags][:testplans].to_json
 end
 
 get '/api/tags/platforms' do
 	content_type :json
-	data["tags_platforms"].to_json
+	data[:tags][:platforms].to_json
 end
 
 get '/api/tags/testers' do
 	content_type :json
-	data["tags_testers"].to_json
+	data[:tags][:testers].to_json
 end
 
 get '/api/data' do
