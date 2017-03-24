@@ -1,5 +1,6 @@
-require 'rubygems'
-require 'sinatra'
-require 'json'
-require 'gherkin/parser'
-require 'gherkin/pickles/compiler'
+source 'https://rubygems.org' do
+	gem 'sinatra'
+	gem 'json'
+	gem 'gherkin/parser'
+	gem 'gherkin/pickles/compiler'
+end
