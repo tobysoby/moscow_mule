@@ -1,0 +1,5 @@
+require 'rubygems'
+require 'sinatra'
+require 'json'
+require 'gherkin/parser'
+require 'gherkin/pickles/compiler'
