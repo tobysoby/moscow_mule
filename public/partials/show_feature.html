@@ -22,6 +22,7 @@
 				{{scenario.name}}
 				<!-- set the scenario tags as labels -->
 				<span class='label label-default' ng-repeat="tag in scenario.tags">{{tag.name}}</span>
+				<span ng-if="testsToRun.indexOf(scenario) != -1" class="glyphicon glyphicon-star pull-right"></span>
 				
 			</div>
 			<!-- set the scenario description -->

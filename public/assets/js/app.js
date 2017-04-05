@@ -74,6 +74,7 @@ moscowMuleApp.controller('FeaturesCtrl', function($scope, $http){
 			//add it!
 			$scope.$parent.testsToRun.push(scenario);
 		}
+		$scope.testsToRun = $scope.$parent.testsToRun;
 	};
 	$scope.startRunningTests = function() {
 		//set the test_index
