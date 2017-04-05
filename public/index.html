@@ -54,6 +54,7 @@
 							<ul class="dropdown-menu">
 								<li><a>Number of Tests to run: {{testsToRun.length}}</a></li>
 								<li><a href="#runtests" ng-click="startRunningTests()">Run the Tests</a></li>
+								<li><a ng-if="testsToRun.length != 0" ng-click="saveTests(testsToRun)" ng-href="{{ url }}">Export the Tests</a></li>
 							</ul>
 						</li>
 						<li><a>Number of Tests to run: {{testsToRun.length}}</a></li>

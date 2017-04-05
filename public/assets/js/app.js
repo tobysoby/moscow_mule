@@ -90,6 +90,15 @@ moscowMuleApp.controller('FeaturesCtrl', function($scope, $http){
 			$scope.scenariosToShow.push($scope.scenarios[tag.scenarios[i][1]]);
 		}
 	};
+	$scope.saveTests = function (tests) {
+			$scope.toJSON = '';
+			$scope.toJSON = angular.toJson(tests);
+			var blob = new Blob([$scope.toJSON], { type:"application/json;charset=utf-8;" });			
+			var downloadLink = angular.element('<a></a>');
+                        downloadLink.attr('href',window.URL.createObjectURL(blob));
+                        downloadLink.attr('download', 'testRun.json');
+			downloadLink[0].click();
+		};
 });
 
 moscowMuleApp.controller('RunTestsCtrl', function($scope){
