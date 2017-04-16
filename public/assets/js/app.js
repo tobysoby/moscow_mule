@@ -80,7 +80,7 @@ moscowMuleApp.controller('FeaturesCtrl', function($scope, $http){
 			$scope.$parent.testsToRun.push(scenario);
 		}
 		$scope.testsToRun = $scope.$parent.testsToRun;
-		$scope.$apply();
+		$scope.$applyAsync();
 	};
 	$scope.startRunningTests = function() {
 		//set the test_index
@@ -179,5 +179,9 @@ moscowMuleApp.controller('RunTestsCtrl', function($scope){
 				$scope.testsToRun[i].additional_info_show = ".";
 			}
 		}
+	};
+	$scope.clearTestRun = function() {
+		$scope.testsToRun = [];
+		$scope.$parent.testsToRun = [];
 	};
 });
