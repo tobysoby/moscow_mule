@@ -58,12 +58,13 @@ moscowMuleApp.controller('FeaturesCtrl', function($scope, $http){
 	});
 	$scope.setFeature = function(feature) {
 		$scope.currentFeature = feature;
-		if (feature["background"] != null) {
-			$scope.background = feature["background"]
+		if (feature["feature"]["children"][0]["type"] === "Background") {
+			$scope.background = feature["feature"]["children"][0]
+			feature["feature"]["children"].shift()
 		} else {
 			$scope.background = null
 		}
-		$scope.scenariosInFeature = feature["scenarioDefinitions"];
+		$scope.scenariosInFeature = feature["feature"]["children"];
 	};
 	$scope.setScenario = function(scenario) {
 		$scope.$parent.currentScenario = scenario;
