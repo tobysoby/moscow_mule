@@ -28,6 +28,10 @@ moscowMuleApp.config(['$routeProvider', function($routeProvider) {
 		templateUrl: 'partials/home.html',
 		controller: 'FeaturesCtrl'
 	}).
+	when('/uploadtests', {
+		templateUrl: 'partials/upload_tests.html',
+		controller: 'FeaturesCtrl'
+	}).
 	when('/about', {
 		templateUrl: 'partials/about.html',
 		controller: 'FeaturesCtrl'
@@ -76,6 +80,7 @@ moscowMuleApp.controller('FeaturesCtrl', function($scope, $http){
 			$scope.$parent.testsToRun.push(scenario);
 		}
 		$scope.testsToRun = $scope.$parent.testsToRun;
+		$scope.$apply();
 	};
 	$scope.startRunningTests = function() {
 		//set the test_index
@@ -101,6 +106,18 @@ moscowMuleApp.controller('FeaturesCtrl', function($scope, $http){
                         downloadLink.attr('download', 'testRun.json');
 			downloadLink[0].click();
 		};
+	$scope.uploadTests = function() {
+		var f = document.getElementById('file').files[0],
+			r = new FileReader();
+		r.onloadend = function(e) {
+			var data = e.target.result;
+			testsToRun = angular.fromJson(data);
+			for (i = 0; i<testsToRun.length; i++) {
+				$scope.addToTestRun(testsToRun[i]);
+			}
+		}
+		r.readAsBinaryString(f);
+	};
 });
 
 moscowMuleApp.controller('RunTestsCtrl', function($scope){
