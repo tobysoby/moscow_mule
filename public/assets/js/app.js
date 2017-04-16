@@ -93,7 +93,6 @@ moscowMuleApp.controller('FeaturesCtrl', function($scope, $http){
 		var scenariosToShowIds = tag.scenarios;
 		$scope.scenariosToShow = [];
 		for (var i = 0; i < scenariosToShowIds.length; i++) {
-			console.log($scope.scenarios[tag.scenarios[i][1]]);
 			$scope.scenariosToShow.push($scope.scenarios[tag.scenarios[i][1]]);
 		}
 	};
@@ -117,6 +116,11 @@ moscowMuleApp.controller('FeaturesCtrl', function($scope, $http){
 			}
 		}
 		r.readAsBinaryString(f);
+	};
+	$scope.addAllToTestrun = function(scenarios) {
+		for (i = 0; i<scenarios.length; i++) {
+			$scope.addToTestRun(scenarios[i]);
+		}
 	};
 });
 

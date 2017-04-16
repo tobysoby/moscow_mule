@@ -1,5 +1,8 @@
 <div class="content">
-	Tags:
+	<span>Tags:</span>
+	<span>Tags:</span>
+	blubb
+	<span><a href="#" ng-click="addAllToTestrun(scenariosToShow)">Add all scenarios to TestRun</a></span>
 	<!--<span ng-repeat="scenario in scenariosToShow">{{scenario.title}}</span>-->
 	<div class="list-group">
 		<a href="#showscenario" class="list-group-item" ng-repeat="scenario in scenariosToShow" ng-click="setScenario(scenario)" ng-class="{'list-group-item-success': test.result=='true', 'list-group-item-warning': test.result==null, 'list-group-item-danger': test.result=='false'}">

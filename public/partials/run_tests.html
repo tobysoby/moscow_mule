@@ -1,17 +1,13 @@
 <div class="content">
-	<div ng-if="runTestState==0">
+	<div>
 		<span><b>Run a selection of tests!</b></span><br/>
 		<span>Here is an overview of your selected tests:</span><br/>
-		<span>testRunName: {{testsToRun.testRunName}} | <a href="#" ng-click="editTestRunName">Edit</a></span><br/>
-		<span>testPlatformName: {{testsToRun.testPlatformName}}</span><br/>
-	</div>
-	<div ng-if="runTestState==1 || runTestState==2">
-		<span><b>Run a selection of tests!</b></span><br/>
-		<span>Here is an overview of your selected tests:</span><br/>
-		<span>testcase {{test_index+1}} of {{testsToRun.length}}</span><br/>
+		<span ng-if="runTestState==1 || runTestState==2">testcase {{test_index+1}} of {{testsToRun.length}}</span><br/>
 	</div>
 
-
+	<div>
+		<button ng-click="clearTestRun">Clear TestRun</button>
+	</div>
 
 	<br/>
 	<!-- show an overview of all the runable tests -->
