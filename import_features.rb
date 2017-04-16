@@ -41,9 +41,11 @@ def read_tags_from_scenarios (scenarios)
 	platforms = Hash.new
 	testplans = Hash.new
 	scenarios.each do |scenario|
-		if scenario[:tags].size != 0
-			scenario[:tags].each do |tag|
-				global = putTagIntoHash(tag, scenario, global)
+		if scenario[:type] == :Scenario
+			if scenario[:tags].size != 0
+				scenario[:tags].each do |tag|
+					global = putTagIntoHash(tag, scenario, global)
+				end
 			end
 		end
 	end
@@ -75,7 +77,7 @@ def read_scenarios (features)
 	id = 0
 	scenarios = Array.new
 	features.each do |feature|
-		feature[:scenarioDefinitions].each do |scenario|
+		feature[:feature][:children].each do |scenario|
 			scenario[:id] = id
 			scenario = hasImages(scenario)
 			id += 1
@@ -87,11 +89,14 @@ end
 
 def hasImages (scenario)
 	images_arr = Array.new
-	scenario[:tags].each do |tag|
-		if tag[:name].index("image:")
-			image_name = tag[:name].sub("@image:", "")
-			FileUtils.cp @location_features + '/images/' + image_name, './public/assets/images/' + image_name
-			images_arr.push './assets/images/' + image_name
+	puts scenario
+	if scenario[:type] == :Scenario
+		scenario[:tags].each do |tag|
+			if tag[:name].index("image:")
+				image_name = tag[:name].sub("@image:", "")
+				FileUtils.cp @location_features + '/images/' + image_name, './public/assets/images/' + image_name
+				images_arr.push './assets/images/' + image_name
+			end
 		end
 	end
 	scenario[:images] = images_arr
