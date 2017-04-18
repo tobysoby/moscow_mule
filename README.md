@@ -1,8 +1,8 @@
-#moscow_mule
+# moscow_mule
 
-##a simple viewer for cucumber tests
+## a simple viewer for cucumber tests
 
-*Ever wondered how to show the supposedly "business-readable" cucumber features to your non-technical stakeholder?*
+**Ever wondered how to show the supposedly "business-readable" cucumber features to your non-technical stakeholder?**
 
 What can you do? moscow_mule lets you view your cucumber features in a browser. You can get a list of all scenarios with a specific tag. And you can do manual test runs. That's if you have scenarios you want to test manually, but where you also want to track the results. It gives you the result in a table that is understood by JIRA.
 
