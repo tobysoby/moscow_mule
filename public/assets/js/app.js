@@ -185,3 +185,8 @@ moscowMuleApp.controller('RunTestsCtrl', function($scope){
 		$scope.$parent.testsToRun = [];
 	};
 });
+
+$(document).on('click', '[data-toggle="lightbox"]', function(event) {
+    event.preventDefault();
+    $(this).ekkoLightbox();
+});

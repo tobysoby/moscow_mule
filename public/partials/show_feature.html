@@ -28,7 +28,11 @@
 			</div>
 			<!-- set the scenario description -->
 			<div class='panel-body'>
-				<p ng-repeat="image in scenario.images"><img src={{image}} alt="image" class="img-responsive"></p>
+				<p ng-repeat="image in scenario.images">
+					<a href="{{image}}" data-toggle="lightbox">
+						<img src="{{image}}" class="img-fluid" height="20%" width="20%">
+					</a>
+				</p>
 				<p><b>{{scenario.name}}</b></p>
 				<table class='table-striped'>
 					<tr ng-repeat="step in scenario.steps"><td>{{step.keyword}} {{step.text}}</td></tr>
