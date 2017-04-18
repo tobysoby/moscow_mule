@@ -33,6 +33,14 @@
 				<table class='table-striped'>
 					<tr ng-repeat="step in scenario.steps"><td>{{step.keyword}} {{step.text}}</td></tr>
 				</table>
+				<!-- show the examples if this is a scenario outline -->
+				<div ng-if="scenario.examples[0].type == 'Examples'">
+					</br>Examples:</br>
+					<table class='table-striped'>
+						<tr><th ng-repeat="head in scenario.examples[0].tableHeader.cells">{{ head.value }}</th></tr>
+						<tr ng-repeat="body_row in scenario.examples[0].tableBody"><td ng-repeat="cell in body_row.cells">{{ cell.value }}</td></tr>
+					</table>
+				</div>
 			</div>
 		</div>
 	</div>
