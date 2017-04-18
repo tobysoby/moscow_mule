@@ -12,11 +12,11 @@ What's it not supposed to be:
 * It isn't supposed to run on a server, but on your local machine.
 * It isn't supposed to change your feature files. Do that with a proper text editor and a proper VCS.
 
-##Installation
+## Installation
 * bundle install
 * ruby moscow_mule.rb
 
-##Specific tags
+## Specific tags
 If you tag your scenarios in a specific way, the app is able to recognize this:
 * @testplan:xyz - 
 * @tester:xyz - 
