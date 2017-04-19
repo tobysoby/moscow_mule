@@ -9,7 +9,7 @@ def import
 	FileUtils.mkdir('./public/assets/images/')
 
 	#location_features = @config[:location_features]
-	@location_features = "../features_test_en"
+	@location_features = "../features"
 	data = Hash.new
 
 	features = Array.new
@@ -41,7 +41,7 @@ def read_tags_from_scenarios (scenarios)
 	platforms = Hash.new
 	testplans = Hash.new
 	scenarios.each do |scenario|
-		if scenario[:type] == :Scenario
+		if scenario[:type] == :Scenario || scenario[:type] == :ScenarioOutline
 			if scenario[:tags].size != 0
 				scenario[:tags].each do |tag|
 					global = putTagIntoHash(tag, scenario, global)
