@@ -2,29 +2,28 @@
 
 require 'gherkin/parser'
 require 'gherkin/pickles/compiler'
+require 'yaml'
 
 def import
 	#remove all images
 	FileUtils.rm_rf('./public/assets/images/')
 	FileUtils.mkdir('./public/assets/images/')
 
-	#location_features = @config[:location_features]
-	@location_features = "../features"
+
+	config = YAML.load_file('./moscow_mule.config')
+	location_features = config["location_features"]
+
 	data = Hash.new
 
 	features = Array.new
 
-	old_path = Dir.pwd
-	Dir.chdir(@location_features)
-	feature_files = Dir.glob("*.*")
-	Dir.chdir(old_path)
+	feature_files = Dir[location_features]
 
 	feature_files.each_with_index do |feature_file, index_feature_file|
-		file = File.open(@location_features + "/" + feature_file, "r:UTF-8")
+		file = File.open(feature_file, "r:UTF-8")
 		content = file.read
 		parser = Gherkin::Parser.new
 		gherkin_document = parser.parse(content)
-		#pickles = Gherkin::Pickles::Compiler.new.compile(gherkin_document, "../features/" + feature_file)
 		features.push gherkin_document
 	end
 	data[:features] = features
@@ -94,7 +93,7 @@ def hasImages (scenario)
 		scenario[:tags].each do |tag|
 			if tag[:name].index("image:")
 				image_name = tag[:name].sub("@image:", "")
-				FileUtils.cp @location_features + '/images/' + image_name, './public/assets/images/' + image_name
+				FileUtils.cp location_features + '/images/' + image_name, './public/assets/images/' + image_name
 				images_arr.push './assets/images/' + image_name
 			end
 		end

@@ -1,14 +1,15 @@
 require 'rubygems'
 require 'sinatra'
 require 'json'
+require 'yaml'
 require './import_features.rb'
 require './import_config.rb'
 
-import_config
+config = YAML.load_file('./moscow_mule.config')
 
 data = import
 
-set :port, @config[:port]
+set :port, config["port"]
 
 get '/' do
 	@data = data

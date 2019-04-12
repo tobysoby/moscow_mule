@@ -42,22 +42,22 @@ moscowMuleApp.controller('FeaturesCtrl', function($scope, $http){
 
 	$scope.testsToRun = [];
 
-	$http.get('http://localhost:1234/api/features').then(function(featuresResponse) {
+	$http.get('http://localhost:port: "1234"/api/features').then(function(featuresResponse) {
 		$scope.features = featuresResponse.data;
 	});
-	$http.get('http://localhost:1234/api/scenarios').then(function(featuresResponse) {
+	$http.get('http://localhost:port: "1234"/api/scenarios').then(function(featuresResponse) {
 		$scope.scenarios = featuresResponse.data;
 	});
-	$http.get('http://localhost:1234/api/tags/testers').then(function(featuresResponse) {
+	$http.get('http://localhost:port: "1234"/api/tags/testers').then(function(featuresResponse) {
 		$scope.tags_testers = featuresResponse.data;
 	});
-	$http.get('http://localhost:1234/api/tags/testplans').then(function(featuresResponse) {
+	$http.get('http://localhost:port: "1234"/api/tags/testplans').then(function(featuresResponse) {
 		$scope.tags_testplans = featuresResponse.data;
 	});
-	$http.get('http://localhost:1234/api/tags/platforms').then(function(featuresResponse) {
+	$http.get('http://localhost:port: "1234"/api/tags/platforms').then(function(featuresResponse) {
 		$scope.tags_platforms = featuresResponse.data;
 	});
-	$http.get('http://localhost:1234/api/tags/global').then(function(featuresResponse) {
+	$http.get('http://localhost:port: "1234"/api/tags/global').then(function(featuresResponse) {
 		$scope.tags_global = featuresResponse.data;
 	});
 	$scope.setFeature = function(feature) {
